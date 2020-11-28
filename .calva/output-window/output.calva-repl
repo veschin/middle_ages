@@ -1,0 +1,14 @@
+(create-database)
+((0)
+ "We got an error -> java.sql.BatchUpdateException: batch entry 0: [SQLITE_BUSY]  The database file is locked (database is locked); "
+ (0)
+ (0)
+ (0)
+ "We got an error -> java.sql.BatchUpdateException: batch entry 0: [SQLITE_BUSY]  The database file is locked (database is locked); ")
+clj::db=>
+#'db/create-database
+clj::db=>
+((0) (0) (0) (0) (0) (0))
+clj::db=>
+{:exit 0, :out "barons    dukes     earls     kings     knights   peasants\n", :err ""}
+clj::db=>
