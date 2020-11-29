@@ -9,10 +9,11 @@
 
 (def base-fields
   [[:id :integer :primary :key :autoincrement]
+   [:sex :bool]
    [:name :text]
    [:age :integer]
-   [:birth_date :date]
-   [:death_date :date]])
+   [:birth_date :integer]
+   [:death_date :integer]])
 
 (def kings-table
   [:kings
@@ -47,12 +48,12 @@
 (def peasants-table
   [:peasants
    [[:id :integer :primary :key :autoincrement]
+    [:sex :bool]
     [:name :text]
     [:age :integer]
     [:king_id :integer]]])
 
-(defn delete-database []
-  (sh "rm" "db/database.db"))
+(def delete-database #(sh "rm" "db/database.db"))
 
 (defn create-tables
   [table fields]
@@ -67,7 +68,8 @@
   (let [tables [kings-table earls-table dukes-table
                 barons-table knights-table peasants-table]]
     (delete-database)
-    (map (fn [[table fields]] (create-tables table fields)) tables)))
+    (doseq [[table fields] tables]
+      (create-tables table fields))))
 
 (comment
   "GET TABLES"
