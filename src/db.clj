@@ -25,25 +25,25 @@
   [:earls
    (into base-fields
          [[:relative_id :integer]
-          [:king_id :integer]])])
+          [:kings_id :integer]])])
 
 (def dukes-table
   [:dukes
    (into base-fields
          [[:relative_id :integer]
-          [:king_id :integer]])])
+          [:kings_id :integer]])])
 
 (def barons-table
   [:barons
    (into base-fields
          [[:relative_id :integer]
-          [:king_id :integer]])])
+          [:kings_id :integer]])])
 
 (def knights-table
   [:knights
    (into base-fields
          [[:relative_id :integer]
-          [:king_id :integer]])])
+          [:kings_id :integer]])])
 
 (def peasants-table
   [:peasants
@@ -51,7 +51,7 @@
     [:sex :bool]
     [:name :text]
     [:age :integer]
-    [:king_id :integer]]])
+    [:kings_id :integer]]])
 
 (def delete-database #(sh "rm" "db/database.db"))
 
@@ -78,5 +78,7 @@
   "GET SCHEMA"
   (:out (sh "sqlite3" "db/database.db" ".schema"))
 
+
+  (:out (sh "sqlite3" "db/database.db" "SELECT * FROM dukes"))
   ;
   )
