@@ -15,35 +15,36 @@
    [:birth_date :integer]
    [:death_date :integer]])
 
+(def noble-fields
+  [[:relative_id :integer]
+   [:relative_estate :text]
+   [:kings_id :integer]])
+
 (def kings-table
   [:kings
    (into base-fields
-         [[:heir_id :integer]
-          [:years_at_the_throne :integer]])])
+         [[:years_at_the_throne :integer]
+          [:heir_id :integer]])])
 
 (def earls-table
   [:earls
    (into base-fields
-         [[:relative_id :integer]
-          [:kings_id :integer]])])
+         noble-fields)])
 
 (def dukes-table
   [:dukes
    (into base-fields
-         [[:relative_id :integer]
-          [:kings_id :integer]])])
+         noble-fields)])
 
 (def barons-table
   [:barons
    (into base-fields
-         [[:relative_id :integer]
-          [:kings_id :integer]])])
+         noble-fields)])
 
 (def knights-table
   [:knights
    (into base-fields
-         [[:relative_id :integer]
-          [:kings_id :integer]])])
+         noble-fields)])
 
 (def peasants-table
   [:peasants
