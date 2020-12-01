@@ -1,11 +1,15 @@
-(ns gen-algo)
+(ns gen-algo
+  (:require [clojure.java.jdbc :as jdbc]
+            [db :refer [db-spec]]
+            [honeysql.core :as sql]))
+
 
 (def names-config (read-string (slurp "src/names_config.edn")))
 
-(def base-state (atom {:year 0
-                       :id-counter 0}))
-
-(def names-state (atom {}))
+(defn drop-states []
+  (def base-state (atom {:year 0
+                         :id-counter 0}))
+  (def names-state (atom {})))
 
 (defn generate-king [_]
   (let [{year :year} @base-state
@@ -47,3 +51,28 @@
      :years_at_the_throne years-at-the-throne
      :heir_id heir-id}))
 
+(defn generate-noble [_]
+  (let [{year :year} @base-state
+        sex (rand-nth [:women :men])
+        age (rand-int 110)
+        name (rand-nth (sex names-config))
+        bias (- year (rand-int 50))
+        birth-date-formula (if (pos? bias) bias year)
+        death-date (:year (swap! base-state assoc :year (+ age birth-date-formula)))
+        final-sex (case sex
+                    :men 1
+                    :women 0)
+        kings (seq (jdbc/query
+                    db-spec
+                    (sql/format {:select [:k.id]
+                                 :from [[:kings :k]]
+                                 :where [:between
+                                         :k.birth_date
+                                         birth-date-formula
+                                         death-date]})))]
+    {:name name
+     :sex final-sex
+     :age age
+     :birth_date birth-date-formula
+     :death_date death-date
+     :kings_id kings}))
