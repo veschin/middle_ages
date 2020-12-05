@@ -2,7 +2,6 @@
   (:require [clojure.java.jdbc :as jdbc]
             [db :refer [db-spec create-database]]
             [honeysql.core :as sql]
-
             [gen-algo :refer [drop-states]]))
 
 (defn fill-kings []
@@ -38,6 +37,6 @@
              db-spec
              (sql/format {:select [:*]
                           :from [table]})))]
-    (take 100 (get-table :peasants)))
+    (take 2 (get-table :earls)))
   ;
   )

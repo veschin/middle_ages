@@ -50,7 +50,7 @@
      :birth_date birth-date-formula
      :death_date death-date
      :years_at_the_throne years-at-the-throne
-     :heir_id heir-id}))
+     :heir_id (inc heir-id)}))
 
 (defn generate-noble [_]
   (let [{year :year} @base-state
